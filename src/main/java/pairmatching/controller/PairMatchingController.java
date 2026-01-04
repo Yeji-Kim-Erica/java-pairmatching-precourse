@@ -1,10 +1,12 @@
 package pairmatching.controller;
 
-import pairmatching.model.Feature;
-import pairmatching.model.MatchingMission;
+import pairmatching.model.*;
+import pairmatching.util.FileParser;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -21,6 +23,9 @@ public class PairMatchingController {
     }
 
     public void run() {
+        Crews backendCrews = getCrews(Course.BACKEND, "backend-crew.md");
+        Crews frontendCrews = getCrews(Course.FRONTEND, "frontend-crew.md");
+
         Feature feature = retry(this::selectFeature);
         MatchingMission matchingMission = retry(this::findCourseLevelMissionForMatching);
     }
@@ -45,5 +50,12 @@ public class PairMatchingController {
         outputView.printCourseLevelMissionPrompt();
         List<String> input = inputView.readCourseLevelMission();
         return MatchingMission.from(input);
+    }
+
+    private Crews getCrews(Course course, String fileName) {
+        String path = System.getProperty("user.dir");
+        File file = new File(path + "/src/main/resources/" + fileName);
+
+        return new Crews(course, FileParser.getInfo(file));
     }
 }

@@ -17,15 +17,6 @@ public final class InputParser {
         return input.trim();
     }
 
-    public static int parseToInt(String input, String errorMessage) {
-        String refinedInput = refineInput(input, errorMessage);
-        try {
-            return Integer.parseInt(refinedInput);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(errorMessage);
-        }
-    }
-
     public static List<String> parseToStrings(String input, String errorMessage) {
         List<String> result = new ArrayList<>();
         for (String str : input.split("\\s*,\\s*")){
