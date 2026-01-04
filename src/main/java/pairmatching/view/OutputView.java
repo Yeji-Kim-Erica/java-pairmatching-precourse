@@ -1,8 +1,6 @@
 package pairmatching.view;
 
-import pairmatching.model.Course;
-import pairmatching.model.Feature;
-import pairmatching.model.Level;
+import pairmatching.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +39,15 @@ public class OutputView {
         out.println(OUTLINE);
         out.println("과정, 레벨, 미션을 선택하세요.");
         out.println("ex) 백엔드, 레벨1, 자동차경주");
+    };
+
+    public void printMatchResult(MatchResult matchResult) {
+        out.println();
+        out.println("페어 매칭 결과입니다.");
+        for (Pair pair : matchResult.getPairs().getPairs()) {
+            Crews crews = pair.getCrews();
+            out.println(String.join(" : ", crews.getNames()));
+        }
     };
 
     private void printCourses() {

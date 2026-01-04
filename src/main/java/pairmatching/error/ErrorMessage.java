@@ -9,7 +9,10 @@ public enum ErrorMessage {
     FEATURE_UNAVAILABLE("존재하지 않는 기능입니다."),
     COURSE_UNAVAILABLE("존재하지 않는 과정입니다."),
     LEVEL_UNAVAILABLE("존재하지 않는 레벨입니다."),
-    MISSION_UNAVAILABLE("존재하지 않는 미션입니다.");
+    MISSION_UNAVAILABLE("존재하지 않는 미션입니다."),
+    INVALID_CREW("존재하지 않는 크루입니다."),
+    MATCH_FAILURE("페어 매칭에 실패했습니다."),
+    MATCH_RESULT_UNAVAILABLE("페어 매칭 결과가 존재하지 않습니다.");
 
     private final String message;
 

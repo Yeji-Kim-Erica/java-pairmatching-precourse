@@ -24,6 +24,17 @@ public class MatchingMission {
         return new MatchingMission(course, level, mission);
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public boolean equals(MatchingMission matchingMission) {
+        boolean isCourseSame = course.equals(matchingMission.course);
+        boolean isLevelSame = level.equals(matchingMission.level);
+        boolean isMissionSame = mission.equals(matchingMission.mission);
+        return isCourseSame && isLevelSame && isMissionSame;
+    }
+
     private static void validateFormat(List<String> input) {
         if (input.size() != 3) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());

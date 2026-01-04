@@ -5,8 +5,6 @@ import pairmatching.util.FileParser;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -16,18 +14,31 @@ import java.util.function.Supplier;
 public class PairMatchingController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final MatchService matchService;
 
-    public PairMatchingController(InputView inputView, OutputView outputView) {
+    public PairMatchingController(InputView inputView, OutputView outputView, MatchService matchService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.matchService = matchService;
     }
 
     public void run() {
-        Crews backendCrews = getCrews(Course.BACKEND, "backend-crew.md");
-        Crews frontendCrews = getCrews(Course.FRONTEND, "frontend-crew.md");
+        Feature feature;
+        MatchingMission matchingMission;
 
-        Feature feature = retry(this::selectFeature);
-        MatchingMission matchingMission = retry(this::findCourseLevelMissionForMatching);
+        while (true) {
+            feature = retry(this::selectFeature);
+            if (feature.equals(Feature.EXIT)) {
+                return;
+            }
+
+            matchingMission = retry(this::findCourseLevelMissionForMatching);
+            if (feature.equals(Feature.PAIR_MATCH)) {
+                matchService.match(matchingMission);
+                MatchResult matchResult = matchService.getMatchResult(matchingMission);
+                outputView.printMatchResult(matchResult);
+            }
+        }
     }
 
     private <T> T retry(Supplier<T> supplier) {
@@ -50,12 +61,5 @@ public class PairMatchingController {
         outputView.printCourseLevelMissionPrompt();
         List<String> input = inputView.readCourseLevelMission();
         return MatchingMission.from(input);
-    }
-
-    private Crews getCrews(Course course, String fileName) {
-        String path = System.getProperty("user.dir");
-        File file = new File(path + "/src/main/resources/" + fileName);
-
-        return new Crews(course, FileParser.getInfo(file));
     }
 }
