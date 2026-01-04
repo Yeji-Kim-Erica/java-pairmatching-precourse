@@ -1,4 +1,4 @@
-package pairmatching.constant;
+package pairmatching.model;
 
 import pairmatching.error.ErrorMessage;
 

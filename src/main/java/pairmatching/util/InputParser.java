@@ -28,7 +28,7 @@ public final class InputParser {
 
     public static List<String> parseToStrings(String input, String errorMessage) {
         List<String> result = new ArrayList<>();
-        for (String str : input.split(",")){
+        for (String str : input.split("\\s*,\\s*")){
             String refinedStr = refineInput(str, errorMessage);
             result.add(refinedStr);
         };
