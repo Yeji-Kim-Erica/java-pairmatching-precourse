@@ -2,8 +2,6 @@ package pairmatching.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Pair {
     private final Crews crews;
@@ -12,8 +10,8 @@ public class Pair {
         this.crews = crews;
     }
 
-    public static Pair of(Crew crew1, Crew crew2) {
-        Crews crews = new Crews(new ArrayList<>(Arrays.asList(crew1, crew2)));
+    public static Pair of(Crew...args) {
+        Crews crews = new Crews(new ArrayList<>(Arrays.asList(args)));
         return new Pair(crews);
     }
 
